@@ -1123,3 +1123,10 @@
 2023-03-11 17:57:48	658e965f-0990-478c-9d57-20376dc45c4d	POST	/api/v1/otp/sendVerification
 2023-03-11 17:59:01	43150925-631d-4351-8274-c46d41bb7e97	POST	/api/v1/otp/sendVerification
 2023-03-12 20:13:40	d6bb1b0a-f73f-4621-a132-ef8f9b63ed6e	POST	/api/v1/otp/sendVerification
+2023-03-16 20:49:15	a5135902-7c7f-4880-9e9c-6280ee2fc5ae	POST	/api/v1/otp/verifiyCode
+2023-03-16 20:49:28	176352e6-a790-47ca-a76e-a2c8e64c45b7	POST	/api/v1/otp/sendVerification
+2023-03-16 20:51:43	1f677c9a-3731-4d51-834c-5a73f76e75e2	POST	/api/v1/otp/sendVerification
+2023-03-16 20:51:56	d752183f-0b26-4a08-ae30-77fb2619864a	POST	/api/v1/otp/sendVerification
+2023-03-16 21:07:36	55279ebb-901d-4105-8cf7-312977f36b0d	POST	/api/v1/otp/sendVerification
+2023-03-16 21:09:49	4fe89f9c-6cd6-437a-a8ec-22029a7fb105	POST	/api/v1/otp/sendVerification
+2023-03-16 21:10:24	5e8c9f88-a3aa-4194-b013-c394e68cc1e6	POST	/api/v1/otp/verifiyCode
