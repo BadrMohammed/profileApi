@@ -17,5 +17,15 @@ const PERMISSIONS = {
   // "get-areas": "get-areas",
   "get-area": "get-area",
   "update-area": "update-area",
+  // "get-categories": "get-categories",
+  "get-category": "get-category",
+  "create-category": "create-category",
+  "update-category": "update-category",
+
+  "get-products": "get-products",
+  "get-product": "get-product",
+  "create-product": "create-product",
+  "update-product": "update-product",
+  "delete-product-image": "delete-product-image",
 };
 module.exports = PERMISSIONS;

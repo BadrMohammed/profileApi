@@ -61,6 +61,7 @@ function prepareArea(area) {
 
     .then((res) => {
       let newResult = {
+        id: res._id,
         nameEn: res.nameEn,
         nameAr: res.nameAr,
         user: res.userId,

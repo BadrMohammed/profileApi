@@ -5,6 +5,7 @@ const {
 } = require("../../services/AreaServices");
 const { getCityByKey } = require("../../services/CityServices");
 const { getUserByKey } = require("../../services/UserServices");
+const responseMessage = require("../../utils/responseMessage");
 
 const addArea = async (req, res) => {
   const { nameEn, nameAr, cityId } = req.body;
@@ -12,12 +13,12 @@ const addArea = async (req, res) => {
   if (!nameEn || !nameAr)
     return res
       .status(400)
-      .json({ data: null, error: [req.t("name-locale-required")] });
+      .json(responseMessage(req.t("name-locale-required"), null, 0));
 
   if (!cityId)
     return res
       .status(400)
-      .json({ data: null, error: [req.t("country-id-required")] });
+      .json(responseMessage(req.t("country-id-required"), null, 0));
 
   const dublictedNameEn = await getAreaByKey("nameEn", nameEn);
   const dublictedNameAr = await getAreaByKey("nameAr", nameAr);
@@ -27,17 +28,17 @@ const addArea = async (req, res) => {
   if (dublictedNameEn)
     return res
       .status(409)
-      .json({ data: null, error: [req.t("name-english-exists")] });
+      .json(responseMessage(req.t("name-english-exists"), null, 0));
 
   if (dublictedNameAr)
     return res
       .status(409)
-      .json({ data: null, error: [req.t("name-arabic-exists")] });
+      .json(responseMessage(req.t("name-arabic-exists"), null, 0));
 
   if (!findCity)
     return res
       .status(409)
-      .json({ data: null, error: [req.t("city-not-exist")] });
+      .json(responseMessage(req.t("city-not-exist"), null, 0));
   try {
     const findUser = await getUserByKey("_id", req?.id);
     let area = await createArea(req?.body, req?.id);
@@ -59,12 +60,9 @@ const addArea = async (req, res) => {
       },
     };
 
-    res.status(200).json({ data: result, message: req.t("item-created") });
+    res.status(200).json(responseMessage(req.t("item-created"), result, 1));
   } catch (error) {
-    return res.status(500).json({
-      ata: null,
-      error: [error.message],
-    });
+    return res.status(500).json(responseMessage(error.message, null, 0));
   }
 };
 
@@ -74,10 +72,10 @@ const getAreaById = async (req, res) => {
   if (!id)
     return res
       .status(400)
-      .json({ data: null, error: [req.t("item-id-required")] });
+      .json(responseMessage(req.t("item-id-required"), null, 0));
 
   const result = await getAreaByKey("_id", id);
-  res.status(200).json({ data: result, message: "" });
+  res.status(200).json(responseMessage("", result, 1));
 };
 
 const editArea = async (req, res) => {
@@ -86,7 +84,7 @@ const editArea = async (req, res) => {
   if (!id)
     return res
       .status(400)
-      .json({ data: null, error: [req.t("item-id-required")] });
+      .json(responseMessage(req.t("item-id-required"), null, 0));
 
   if (cityId) {
     const findCity = await getCityByKey("_id", cityId);
@@ -94,18 +92,15 @@ const editArea = async (req, res) => {
     if (!findCity)
       return res
         .status(409)
-        .json({ data: null, error: [req.t("city-not-exist")] });
+        .json(responseMessage(req.t("city-not-exist"), null, 0));
   }
   try {
     const findArea = await getAreaByKey("_id", id);
     const result = await updateArea(findArea, req?.body, req?.id);
 
-    res.status(200).json({ data: result, message: req.t("item-updated") });
+    res.status(200).json(responseMessage(req.t("item-updated"), result, 1));
   } catch (error) {
-    return res.status(500).json({
-      data: null,
-      error: [error.message],
-    });
+    return res.status(500).json(responseMessage(error.message, null, 0));
   }
 };
 

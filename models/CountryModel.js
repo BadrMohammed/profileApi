@@ -6,7 +6,7 @@ const countrySchema = new Schema(
   {
     nameEn: { type: String, unique: true },
     nameAr: { type: String, unique: true },
-    userId: { type: Schema.Types.ObjectId, ref: "users" },
+    userId: { type: Schema.Types.ObjectId, ref: "users", required: true },
   },
   {
     timestamps: true,

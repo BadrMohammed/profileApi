@@ -13,7 +13,9 @@ const combineRoutes = require("./routes");
 const i18next = require("i18next");
 const middlewareI18Next = require("i18next-http-middleware");
 const { initLocal } = require("./locales/locale");
+const path = require("path");
 const PORT = process.env.PORT || 3500;
+const staticPath = path.join(__dirname, "/public/uploads");
 
 // const swaggerUi = require("swagger-ui-express");
 // const swaggerDocument = require("./swagger.json");
@@ -22,6 +24,8 @@ const PORT = process.env.PORT || 3500;
 connectDB();
 
 // custom middleware
+app.use(express.static(staticPath));
+app.use("/uploads", express.static(staticPath));
 initLocal();
 app.use(logger); //to log all erros
 app.use(credentials);
@@ -31,6 +35,9 @@ app.use(cors(corsOptions)); //to disable secuirty policy
 
 // build in middleware
 app.use(express.urlencoded({ extended: false })); //handle url encoded(form data)
+app.set("view engine", "ejs");
+// initMulter();
+
 app.use(middlewareI18Next.handle(i18next));
 app.use(express.json()); // build in middleware to handle json
 

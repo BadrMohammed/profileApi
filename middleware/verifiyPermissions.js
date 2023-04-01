@@ -1,9 +1,10 @@
+const responseMessage = require("../utils/responseMessage");
 const verifiyPermissions = (...allowedPermissions) => {
   return (req, res, next) => {
     if (!req?.permissions)
       return res
-        .status(401)
-        .json({ data: null, error: [req.t("no-permission")] });
+        .status(400)
+        .json(responseMessage(req.t("no-permission"), null, 0));
 
     const PermissionsArray = [...allowedPermissions];
 
@@ -12,8 +13,8 @@ const verifiyPermissions = (...allowedPermissions) => {
       .find((val) => val === true);
     if (!result && !req?.permissions.includes("all-permissions"))
       return res
-        .status(401)
-        .json({ data: null, error: [req.t("no-permission")] });
+        .status(400)
+        .json(responseMessage(req.t("no-permission"), null, 0));
 
     if (result || req?.permissions.includes("all-permissions")) next();
   };

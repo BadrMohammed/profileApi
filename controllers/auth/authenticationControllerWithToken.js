@@ -1,4 +1,5 @@
 const { getUserByKey, updateUser } = require("../../services/UserServices");
+const responseMessage = require("../../utils/responseMessage");
 
 const logout = async (req, res) => {
   const { id } = req;
@@ -11,13 +12,15 @@ const logout = async (req, res) => {
   const findUser = await getUserByKey("_id", id);
 
   if (!findUser.token)
-    res.status(200).json({ data: null, message: req.t("signed-successfully") });
+    res
+      .status(200)
+      .json(responseMessage(req.t("signed-successfully"), null, 1));
 
   const _result = await updateUser(findUser, req?.body, "");
 
   res
     .status(200)
-    .json({ data: _result, message: req.t("signed-successfully") });
+    .json(responseMessage(req.t("signed-successfully"), _result, 1));
 };
 
 module.exports = { logout };

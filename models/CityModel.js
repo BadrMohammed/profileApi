@@ -6,8 +6,12 @@ const citySchema = new Schema(
   {
     nameEn: { type: String, unique: true },
     nameAr: { type: String, unique: true },
-    userId: { type: Schema.Types.ObjectId, ref: "users" },
-    countryId: { type: Schema.Types.ObjectId, ref: "countries" },
+    userId: { type: Schema.Types.ObjectId, ref: "users", required: true },
+    countryId: {
+      type: Schema.Types.ObjectId,
+      ref: "countries",
+      required: true,
+    },
   },
   {
     timestamps: true,

@@ -6,3 +6,18 @@
 2023-03-11 02:10:43	c8dc3578-c5c5-43b0-8d47-ca0c0d9551ae	SyntaxError : Unexpected token / in JSON at position 49
 2023-03-11 02:10:46	41e4a577-38c7-46bc-b972-bee8890f1b6a	SyntaxError : Unexpected token / in JSON at position 49
 2023-03-16 20:49:15	9d84451e-197b-4a95-80bf-7b07b3393af2	SyntaxError : Unexpected token / in JSON at position 50
+2023-03-26 01:28:28	12616c0c-728e-4aeb-a022-e83028e162c7	MulterError : Unexpected field
+2023-03-26 01:28:49	27a513db-b969-40a4-b4e3-b72782c76881	MulterError : Unexpected field
+2023-03-26 01:40:39	3b9a044a-0240-432c-9535-9695cfbde8aa	MulterError : Unexpected field
+2023-03-26 01:41:50	ecf50a92-e42f-4460-a89f-65bd82997ec6	MulterError : Unexpected field
+2023-03-26 01:41:52	bc5e82b5-9fc3-4d70-9331-41f3a89eaa73	MulterError : Unexpected field
+2023-03-26 01:42:37	534ba0ed-4d2b-4929-8619-1849eb2056e1	MulterError : Unexpected field
+2023-03-26 01:44:13	b8d010a1-1991-45cd-88e2-cf6e48393dcf	Error : ENOENT: no such file or directory, open 'D:\public\uploads\1679787853191.png'
+2023-03-26 01:44:40	ccb02095-aa83-41c7-939c-09c94faeb60d	Error : ENOENT: no such file or directory, open 'D:\public\uploads\1679787880325.png'
+2023-03-26 01:52:59	4a2f1636-d092-4dc2-a60e-4de66e46de64	Error : ENOENT: no such file or directory, open 'D:\my-projects\node\quote\public\uploads\2023-03-25T23:52:59.217Zsla_photo.png'
+2023-03-26 01:56:01	b9318c05-6fd9-49b9-99e6-b96d2a6a6c3e	Error : ENOENT: no such file or directory, open 'D:\my-projects\node\quote\uploads\2023-03-25T23-56-01.027Z-cam.png'
+2023-03-26 02:04:02	76d20941-e75f-49df-ad8f-7fb40e0c18f8	Error : ENOENT: no such file or directory, open 'D:\public\uploads\1679789042381.png'
+2023-03-26 02:07:25	abe6bb4f-604d-4ef8-8a15-043ee4817840	Error : ENOENT: no such file or directory, open 'D:\my-projects\node\quote\uploads\2023-03-26T00:07:25.177Zcam.png'
+2023-03-28 23:53:21	0eb818cc-16b0-43e2-ba99-1d84a4d5f6e2	MulterError : Unexpected field
+2023-03-28 23:53:23	2f1b0a8c-2748-4f96-8fb6-0efedef94811	MulterError : Unexpected field
+2023-03-31 21:59:02	7dea022f-e13b-45d3-8ee9-a03c8d8ea78e	SyntaxError : Unexpected token a in JSON at position 16

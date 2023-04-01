@@ -12,7 +12,15 @@ const cityRoutesWithoutToken = require("./city/cityRoutesWithoutToken");
 const areaRoutesWithToken = require("./area/areaRoutesWithToken");
 const areaRoutesWithoutToken = require("./area/areaRoutesWithoutToken");
 
+const categoryRoutesWithToken = require("./category/categoryRoutesWithToken");
+const categoryRoutesWithoutToken = require("./category/categoryRoutesWithoutToken");
+
+const productRoutes = require("./productRoutes");
+
 const otpRoutes = require("./otpRoutes");
+const cartRoutes = require("./cartRoutes");
+const reviewRoutes = require("./reviewRoutes");
+const wishlistRoutes = require("./wishlistRoutes");
 
 function combineRoutes(app) {
   //without token
@@ -21,6 +29,7 @@ function combineRoutes(app) {
   app.use("/api/v1/city", cityRoutesWithoutToken);
   app.use("/api/v1/area", areaRoutesWithoutToken);
   app.use("/api/v1/otp", otpRoutes);
+  app.use("/api/v1/category", categoryRoutesWithoutToken);
 
   //to authorized all routes (with token)
   app.use(verifiyJWT);
@@ -29,6 +38,11 @@ function combineRoutes(app) {
   app.use("/api/v1/country", countryRoutesWithToken);
   app.use("/api/v1/city", cityRoutesWithToken);
   app.use("/api/v1/area", areaRoutesWithToken);
+  app.use("/api/v1/category", categoryRoutesWithToken);
+  app.use("/api/v1/product", productRoutes);
+  app.use("/api/v1/cart", cartRoutes);
+  app.use("/api/v1/review", reviewRoutes);
+  app.use("/api/v1/wishlist", wishlistRoutes);
 }
 
 module.exports = combineRoutes;

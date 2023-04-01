@@ -6,8 +6,8 @@ const areaSchema = new Schema(
   {
     nameEn: String,
     nameAr: String,
-    userId: { type: Schema.Types.ObjectId, ref: "users" },
-    cityId: { type: Schema.Types.ObjectId, ref: "cities" },
+    userId: { type: Schema.Types.ObjectId, ref: "users", required: true },
+    cityId: { type: Schema.Types.ObjectId, ref: "cities", required: true },
   },
   {
     timestamps: true,
