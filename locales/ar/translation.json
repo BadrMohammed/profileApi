@@ -54,5 +54,10 @@
   "review-updated-successfully": "تم تعديل التقييم بنجاح",
   "review-deleted-successfully": "تمت حذف التقييم بنجاح",
   "like-added-successfully": "تمت إضافة إعجابك بنجاح",
-  "like-removed-successfully": "تمت ازالة إضافة إعجابك بنجاح"
+  "like-removed-successfully": "تمت ازالة إضافة إعجابك بنجاح",
+  "close-previous-discounts": "يجب عليك إغلاق جميع الخصومات السابقة",
+  "discount-created-successfully": "تم انشاء الخصم بنجاح",
+  "discount-closed-successfully": "تم اغلاق الخصم بنجاح",
+  "category-must-true": "يجب أن يكون مفتاح isCategory true",
+  "category-ids-required": "مفاتيح الفئات مطلوب"
 }

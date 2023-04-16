@@ -11,6 +11,7 @@ const getAllCategories = async (req, res) => {
         id: category.id,
         image: getImagePath(req, category?.image),
         name: res.locals.language === "ar" ? category.nameAr : category.nameEn,
+        isHome: category.isHome,
         description:
           res.locals.language === "ar"
             ? category.descriptionAr

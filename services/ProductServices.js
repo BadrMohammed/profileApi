@@ -16,6 +16,7 @@ const getProducts = async (params, locale) => {
     // range,
     color,
     quantity,
+    categoryIds,
   } = params;
   const options = {
     limit: perPage,
@@ -58,10 +59,12 @@ const getProducts = async (params, locale) => {
     price: price && price,
     color: color && color,
     quantity: quantity && quantity,
+    categoryId: categoryIds && { $in: categoryIds },
   };
   query = removeUnsetValues(query);
 
   const entry = await Product.paginate(query, options);
+
   return entry;
 };
 

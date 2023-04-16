@@ -4,7 +4,12 @@ const responseMessage = require("../utils/responseMessage");
 
 const verifiyJWT = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
-  if (!authHeader && req.url === "/api/v1/product/get") next();
+  if (
+    !authHeader &&
+    (req.url.startsWith("/api/v1/product/get") ||
+      req.url.startsWith("/api/v1/discount/megaDeals"))
+  )
+    next();
   else {
     if (!authHeader?.startsWith("Bearer"))
       return res

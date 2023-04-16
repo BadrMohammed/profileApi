@@ -9,8 +9,7 @@ const getDiscounts = async (params, locale) => {
     id,
     createdAt,
     userId,
-    isCategories,
-    isProducts,
+    isCategory,
     allCategories,
     isValid,
     discount,
@@ -34,8 +33,7 @@ const getDiscounts = async (params, locale) => {
   let query = {
     _id: id && id,
     createdAt: createdAt && createdAt,
-    isCategories: isCategories && isCategories,
-    isProducts: isProducts && isProducts,
+    isCategory: isCategory && isCategory,
     allCategories: allCategories && allCategories,
     isValid: isValid && isValid,
     discount: discount && discount,
@@ -46,21 +44,65 @@ const getDiscounts = async (params, locale) => {
   return entry;
 };
 
-const getDiscountByKey = async (key, value) => {
-  const entry = await Discount.findOne({ [key]: value }).exec();
+const getSortedDiscounts = async (params, locale) => {
+  const { perPage = 10, page = 1 } = params;
+  const options = {
+    limit: perPage,
+    pagination: false,
 
+    page,
+    customLabels: paginationOptions,
+    collation: {
+      locale: locale,
+    },
+    sort: { discount: -1 },
+    // populate: [
+    //   {
+    //     path: "userId",
+    //     select: "_id firstName lastName",
+    //   },
+    // ],
+  };
+  let query = {
+    isValid: true,
+    isCategory: true,
+  };
+  query = removeUnsetValues(query);
+
+  const entry = await Discount.paginate(query, options);
   return entry;
 };
 
-const createDiscount = async (formBody, userId) => {
+const getDiscountByKey = async (key, value, regular) => {
+  let entry = null;
+
+  if (regular) {
+    entry = await Discount.findOne({ [key]: value })
+      .lean()
+      .exec();
+  } else {
+    entry = await Discount.findOne({ [key]: value }).exec();
+  }
+  return entry;
+};
+
+const getDiscountByParams = async (params, regular) => {
+  let entry = null;
+  if (regular) {
+    entry = await Discount.find(params).lean().exec();
+  } else {
+    entry = await Discount.find(params).exec();
+  }
+  return entry;
+};
+
+const createDiscount = async (formBody, userId, img) => {
   const entry = await Discount.create({
+    image: img || undefined,
     discount: formBody.discount,
-    isPercentage: formBody.isPercentage,
     allCategories: formBody.allCategories,
-    isCategories: formBody.isCategories,
-    isProducts: formBody.isProducts,
+    isCategory: formBody.isCategory,
     categoryIds: formBody.categoryIds,
-    productIds: formBody.productIds,
     validDate: formBody.validDate,
     isValid: formBody.isValid,
     userId: userId,
@@ -68,17 +110,16 @@ const createDiscount = async (formBody, userId) => {
   return entry;
 };
 
-const updateDiscount = async (item, formBody, userId) => {
+const updateDiscount = async (item, formBody, userId, img, isValid) => {
   const entry = item;
   if (formBody.discount) entry.discount = formBody.discount;
   if (formBody.isPercentage) entry.isPercentage = formBody.isPercentage;
   if (formBody.allCategories) entry.allCategories = formBody.allCategories;
-  if (formBody.isCategories) entry.isCategories = formBody.isCategories;
-  if (formBody.isProducts) entry.isProducts = formBody.isProducts;
+  if (formBody.isCategory) entry.isCategory = formBody.isCategory;
   if (formBody.categoryIds) entry.categoryIds = formBody.categoryIds;
-  if (formBody.productIds) entry.productIds = formBody.productIds;
-  if (formBody.isValid) entry.isValid = formBody.isValid;
+  if (isValid !== undefined && isValid !== null) entry.isValid = isValid;
   if (userId) entry.userId = userId;
+  if (img) entry.image = img;
 
   const result = await entry.save();
 
@@ -89,4 +130,6 @@ module.exports = {
   createDiscount,
   updateDiscount,
   getDiscountByKey,
+  getDiscountByParams,
+  getSortedDiscounts,
 };

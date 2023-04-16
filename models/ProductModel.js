@@ -11,7 +11,7 @@ const productSchema = new Schema(
     descriptionAr: { type: String },
     price: { type: String, required: true },
     oldPrice: { type: String },
-    specifications: { type: String },
+    specifications: [{ key: String, value: String }],
     quantity: { type: Number, required: true },
     color: { type: String, default: null },
     userId: { type: Schema.Types.ObjectId, ref: "users", required: true },

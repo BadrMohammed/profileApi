@@ -11,6 +11,7 @@ const getCategories = async (params, locale) => {
     createdAt,
     userId,
     categoryId,
+    isHome,
   } = params;
   const options = {
     limit: perPage,
@@ -43,6 +44,7 @@ const getCategories = async (params, locale) => {
     nameAr:
       locale === "ar" ? name && { $regex: new RegExp(name, "i") } : undefined,
     parent: categoryId && categoryId,
+    isHome: isHome && isHome,
   };
   query = removeUnsetValues(query);
 
@@ -82,6 +84,7 @@ function prepareCategory(category) {
         parent: res.parent,
         createdAt: res.createdAt,
         updatedAt: res.updatedAt,
+        isHome: res.isHome,
       };
       return newResult;
     });
@@ -96,6 +99,7 @@ const createCategory = async (formBody, userId, img) => {
     descriptionAr: formBody.descriptionAr,
     parent: formBody.parent,
     userId: userId,
+    isHome: isHome,
   }).then(prepareCategory);
   return entry;
 };
@@ -109,6 +113,7 @@ const updateCategory = async (category, formBody, userId, img) => {
   if (formBody.descriptionAr) entry.nameAr = formBody.descriptionAr;
   if (formBody.parent) entry.parent = formBody.parent;
   if (userId) entry.userId = userId;
+  if (isHome) entry.isHome = isHome;
 
   const result = await entry.save().then(prepareCategory);
 

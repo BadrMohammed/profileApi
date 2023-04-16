@@ -21,11 +21,15 @@ const PERMISSIONS = {
   "get-category": "get-category",
   "create-category": "create-category",
   "update-category": "update-category",
-
   "get-products": "get-products",
   "get-product": "get-product",
   "create-product": "create-product",
   "update-product": "update-product",
   "delete-product-image": "delete-product-image",
+  "get-discounts": "get-discounts",
+  "create-discount": "create-discount",
+  "close-discount": "close-discount",
+  "get-discount": "get-discount",
+  "update-discount": "update-discount",
 };
 module.exports = PERMISSIONS;

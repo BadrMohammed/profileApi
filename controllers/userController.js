@@ -80,12 +80,12 @@ const addUser = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-  const { id, addresses } = req.body;
+  const { addresses } = req.body;
 
-  if (!id)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("item-id-required"), null, 0));
+  // if (!id)
+  //   return res
+  //     .status(400)
+  //     .json(responseMessage(req.t("item-id-required"), null, 0));
 
   if (addresses?.length) {
     let findHasMoreDefault = addresses.filter((add) => add.isDefault);
@@ -96,7 +96,7 @@ const editUser = async (req, res) => {
     }
   }
   try {
-    const findUser = await getUserByKey("_id", id);
+    const findUser = await getUserByKey("_id", req?.id);
     const result = await updateUser(findUser, req?.body);
 
     res.status(200).json(responseMessage(req.t("item-updated"), result, 1));
@@ -106,14 +106,8 @@ const editUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const { id } = req?.params;
+  const result = await getUserByKey("_id", req?.id);
 
-  if (!id)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("item-id-required"), null, 0));
-
-  const result = await getUserByKey("_id", id);
   res.status(200).json(responseMessage("", result, 1));
 };
 

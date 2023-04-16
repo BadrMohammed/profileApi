@@ -20,7 +20,7 @@ const getWishlist = async (params, userId, locale) => {
       },
       {
         path: "productId",
-        select: `_id images ${
+        select: `_id images categoryId ${
           locale === "en" ? "nameEn descriptionEn" : "nameAr descriptionAr"
         } price oldPrice color quantity`,
       },

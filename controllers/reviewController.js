@@ -41,8 +41,14 @@ const getAllReviews = async (req, res) => {
 };
 
 const getTotalReview = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id)
+    return res
+      .status(400)
+      .json(responseMessage(req.t("product-id-required"), null, 0));
   try {
-    const result = await getTotalReviews(req.t);
+    const result = await getTotalReviews(id, req.t);
 
     const filterdResult = result.docs?.length
       ? result.docs.filter((res) => {

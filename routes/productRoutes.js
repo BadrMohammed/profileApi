@@ -15,11 +15,7 @@ router.post(
   productController.addProduct
 );
 
-router.get(
-  "/get/:id",
-  verifiyPermissions(permissions["get-product"]),
-  productController.getProductById
-);
+router.get("/get/:id", productController.getProductById);
 
 router.put(
   "/update",

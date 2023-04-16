@@ -4,13 +4,14 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const categorySchema = new Schema(
   {
-    image: String,
+    image: { type: String, default: null },
     nameEn: { type: String, required: true },
     nameAr: { type: String, required: true },
     descriptionEn: { type: String },
     descriptionAr: { type: String },
     userId: { type: Schema.Types.ObjectId, ref: "users", required: true },
     parent: { type: Schema.Types.ObjectId, ref: "categories" },
+    isHome: { type: Boolean, default: false },
   },
   {
     timestamps: true,

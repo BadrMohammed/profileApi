@@ -3,20 +3,20 @@ const {
   getDiscountByKey,
   createDiscount,
   updateDiscount,
+  getDiscountByParams,
+  getSortedDiscounts,
 } = require("../services/DiscountServices");
-const { getProductByKey } = require("../services/ProductServices");
-const { getCategoryByKey } = require("../services/CategoryServices");
 
 const responseMessage = require("../utils/responseMessage");
+const { getImagePath, removeImage } = require("../utils/imageFunctions");
 
 const getAllDiscounts = async (req, res) => {
-  if (!req?.query.productId)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("product-id-required"), null, 0));
   try {
     const result = await getDiscounts(req?.query, res.locals.language);
-
+    result?.docs.map((item) => {
+      item.image = item.image ? getImagePath(req, item.image) : null;
+      return item;
+    });
     const pagination = {
       counts: result.counts,
       currentPage: result.currentPage,
@@ -31,60 +31,157 @@ const getAllDiscounts = async (req, res) => {
   }
 };
 
-const addReview = async (req, res) => {
-  const { isCategories, isProducts, allCategories } = req.body;
-  const twoTrue = [isCategories, isProducts, allCategories];
-
-  if (!productId)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("product-id-required"), null, 0));
-
-  if (!comment && !rating)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("comment-or-rating-required"), null, 0));
-
-  const findProduct = await getProductByKey("_id", productId);
-
-  if (!findProduct)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("product-not-exist"), null, 0));
-
+const getMegaDeals = async (req, res) => {
   try {
-    if (rating) {
-    }
-    let result = await createReview(req?.body, req?.id);
-    res
+    const result = await getSortedDiscounts(
+      { page: 1, perPage: 10 },
+      res.locals.language
+    );
+    result?.docs.map((item) => {
+      item.image = item.image ? getImagePath(req, item.image) : null;
+      return item;
+    });
+    const pagination = {
+      counts: result.counts,
+      currentPage: result.currentPage,
+      perPage: result.perPage,
+      totalPages: result.totalPages,
+    };
+    return res
       .status(200)
-      .json(responseMessage(req.t("review-added-successfully"), result, 1));
+      .json(responseMessage("", result?.docs, 1, pagination));
   } catch (error) {
     return res.status(500).json(responseMessage(error.message, null, 0));
   }
 };
 
-const editReview = async (req, res) => {
-  const { id, comment, rating } = req?.body;
+const getDiscountById = async (req, res) => {
+  const { id } = req?.params;
 
   if (!id)
     return res
       .status(400)
       .json(responseMessage(req.t("item-id-required"), null, 0));
+  const result = await getDiscountByKey("_id", id, true);
+  result.image = getImagePath(req, result?.image);
 
-  if (!comment && !rating)
+  res.status(200).json(responseMessage("", result, 1));
+};
+const addDiscount = async (req, res) => {
+  const { categoryIds } = req.body;
+  let allCategories = req.body.allCategories === "true" ? true : false;
+  let isCategory = req.body.isCategory === "true" ? true : false;
+
+  if (allCategories) {
+    let findActiveDiscount = await getDiscountByKey("isValid", true);
+
+    if (findActiveDiscount)
+      return res
+        .status(400)
+        .json(responseMessage(req.t("close-previous-discounts"), null, 0));
+  }
+  if (categoryIds?.length && !isCategory) {
     return res
       .status(400)
-      .json(responseMessage(req.t("comment-or-rating-required"), null, 0));
+      .json(responseMessage(req.t("category-must-true"), null, 0));
+  }
 
-  let findItem = await getReviewByKey("_id", id);
+  if (!categoryIds && isCategory) {
+    return res
+      .status(400)
+      .json(responseMessage(req.t("category-ids-required"), null, 0));
+  }
+  let findDiscounts = await getDiscountByParams({
+    isCategory: true,
+    isValid: true,
+  });
+  let tobeClosed = [];
+
+  if (findDiscounts?.length) {
+    findDiscounts.map((disc) => {
+      disc.categoryIds = disc.categoryIds.filter((c) =>
+        categoryIds.find((cc) => cc !== c.toString())
+      );
+      if (!disc.categoryIds?.length) {
+        tobeClosed.push(disc);
+      }
+    });
+  }
+
+  try {
+    if (tobeClosed?.length) {
+      tobeClosed.map((clos) => {
+        updateDiscount(clos, {}, req?.id, null, false);
+      });
+    }
+    const img = req.file ? req.file.filename : null;
+    let result = await createDiscount(req?.body, req?.id, img);
+    result.image = getImagePath(req, result.image);
+    res
+      .status(200)
+      .json(responseMessage(req.t("discount-created-successfully"), result, 1));
+  } catch (error) {
+    return res.status(500).json(responseMessage(error.message, null, 0));
+  }
+};
+
+const closeDiscount = async (req, res) => {
+  const { id } = req.params;
+  if (!id)
+    return res
+      .status(400)
+      .json(responseMessage(req.t("item-id-required"), null, 0));
+
+  let findItem = await getDiscountByKey("_id", id);
   if (!findItem)
     return res
       .status(400)
       .json(responseMessage(req.t("item-not-exist"), null, 0));
 
   try {
-    const result = await updateReview(findItem, req?.body);
+    let result = await updateDiscount(
+      findItem,
+      req?.body,
+      req?.id,
+      null,
+      false
+    );
+    res
+      .status(200)
+      .json(responseMessage(req.t("discount-closed-successfully"), result, 1));
+  } catch (error) {
+    return res.status(500).json(responseMessage(error.message, null, 0));
+  }
+};
+
+const editDiscount = async (req, res) => {
+  const { id } = req?.body;
+
+  if (!id)
+    return res
+      .status(400)
+      .json(responseMessage(req.t("item-id-required"), null, 0));
+
+  let findItem = await getDiscountByKey("_id", id);
+
+  if (!findItem)
+    return res
+      .status(400)
+      .json(responseMessage(req.t("item-not-exist"), null, 0));
+
+  try {
+    const img = req.file ? req.file.filename : null;
+    if (img && findItem?.image) {
+      removeImage(findItem?.image);
+    }
+    const result = await updateDiscount(
+      findItem,
+      req?.body,
+      req?.id,
+      img,
+      undefined
+    );
+    result.image = getImagePath(req, result?.image);
     res
       .status(200)
       .json(responseMessage(req.t("review-updated-successfully"), result, 1));
@@ -93,34 +190,11 @@ const editReview = async (req, res) => {
   }
 };
 
-const removeReview = async (req, res) => {
-  const { id } = req?.params;
-
-  if (!id)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("item-id-required"), null, 0));
-
-  let findItem = await getReviewByKey("_id", id);
-  if (!findItem)
-    return res
-      .status(400)
-      .json(responseMessage(req.t("item-not-exist"), null, 0));
-
-  try {
-    const result = await deleteReview(id);
-    res
-      .status(200)
-      .json(responseMessage(req.t("review-deleted-successfully"), null, 1));
-  } catch (error) {
-    return res.status(500).json(responseMessage(error.message, null, 0));
-  }
-};
-
 module.exports = {
-  getAllReviews,
-  addReview,
-  editReview,
-  removeReview,
-  getTotalReview,
+  getAllDiscounts,
+  addDiscount,
+  closeDiscount,
+  editDiscount,
+  getDiscountById,
+  getMegaDeals,
 };

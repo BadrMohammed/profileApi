@@ -37,6 +37,7 @@ const addCategory = async (req, res) => {
       descriptionAr: category.descriptionAr,
       createdAt: category?.createdAt,
       updatedAt: category?.updatedAt,
+      isHome: category?.isHome,
       parent: findParent
         ? {
             id: findParent._id,

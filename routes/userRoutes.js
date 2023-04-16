@@ -13,7 +13,7 @@ router.get(
 );
 
 router.get(
-  "/get/:id",
+  "/profile",
   verifiyPermissions(permissions["get-user"]),
   userController.getUserById
 );

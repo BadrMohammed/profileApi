@@ -21,6 +21,7 @@ const otpRoutes = require("./otpRoutes");
 const cartRoutes = require("./cartRoutes");
 const reviewRoutes = require("./reviewRoutes");
 const wishlistRoutes = require("./wishlistRoutes");
+const discountRoutes = require("./discountRoutes");
 
 function combineRoutes(app) {
   //without token
@@ -43,6 +44,7 @@ function combineRoutes(app) {
   app.use("/api/v1/cart", cartRoutes);
   app.use("/api/v1/review", reviewRoutes);
   app.use("/api/v1/wishlist", wishlistRoutes);
+  app.use("/api/v1/discount", discountRoutes);
 }
 
 module.exports = combineRoutes;

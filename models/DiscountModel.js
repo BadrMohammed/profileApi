@@ -4,16 +4,14 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const discountSchema = new Schema(
   {
+    image: { type: String, default: null },
     discount: { type: String, required: true },
-    isPercentage: { type: Boolean, default: false },
     allCategories: { type: Boolean, default: false },
-    isCategories: { type: Boolean, default: false },
-    isProducts: { type: Boolean, default: false },
+    isCategory: { type: Boolean, default: false },
     categoryIds: [{ type: Schema.Types.ObjectId, ref: "categories" }],
-    productIds: [{ type: Schema.Types.ObjectId, ref: "products" }],
     userId: { type: Schema.Types.ObjectId, ref: "users", required: true },
     validDate: { type: Date, required: true },
-    isValid: { type: Boolean, default: false },
+    isValid: { type: Boolean, default: true },
   },
   {
     timestamps: true,

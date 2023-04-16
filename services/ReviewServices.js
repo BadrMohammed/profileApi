@@ -31,7 +31,7 @@ const getReviews = async (params, locale) => {
   return entry;
 };
 
-const getTotalReviews = async (locale) => {
+const getTotalReviews = async (productId, locale) => {
   const options = {
     pagination: false,
     lean: true,
@@ -40,8 +40,10 @@ const getTotalReviews = async (locale) => {
     },
     sort: { createdAt: -1 },
   };
-
-  const entry = await Review.paginate({}, options);
+  let query = {
+    productId: productId && productId,
+  };
+  const entry = await Review.paginate(query, options);
   return entry;
 };
 
@@ -101,6 +103,18 @@ const getReviewByKey = async (key, value) => {
 
   return entry;
 };
+
+const getMultipleReviewsByKey = async (key, values, value) => {
+  let entry = null;
+  if (value) {
+    entry = await Review.find({ [key]: value })
+      .lean()
+      .exec();
+  } else {
+    entry = await Review.find().where(key).in(values).lean().exec();
+  }
+  return entry;
+};
 module.exports = {
   getReviews,
   createReview,
@@ -108,4 +122,5 @@ module.exports = {
   getReviewByKey,
   deleteReview,
   getTotalReviews,
+  getMultipleReviewsByKey,
 };

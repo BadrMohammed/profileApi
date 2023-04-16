@@ -54,5 +54,10 @@
   "review-updated-successfully": "Review has been edited successfully",
   "review-deleted-successfully": "Review has been deleted successfully",
   "like-added-successfully": "Your like added successfully",
-  "like-removed-successfully": "Your like has been removed successfully"
+  "like-removed-successfully": "Your like has been removed successfully",
+  "close-previous-discounts": "You should close all previous discounts",
+  "discount-created-successfully": "Discount created successfully",
+  "discount-closed-successfully": "The discount has been closed successfully",
+  "category-must-true": "isCategory key must be true",
+  "category-ids-required": "Category ids is required"
 }

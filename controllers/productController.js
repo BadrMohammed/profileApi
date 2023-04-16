@@ -14,21 +14,69 @@ const {
 const { getImagePath, removeImage } = require("../utils/imageFunctions");
 const responseMessage = require("../utils/responseMessage");
 const validateProduct = require("../utils/validateProduct");
-
+const { getDiscountByParams } = require("../services/DiscountServices");
+const { getMultipleReviewsByKey } = require("../services/ReviewServices");
 const getAllProducts = async (req, res) => {
+  let findCategroy = null;
   try {
-    const result = await getProducts(req?.query, res.locals.language);
+    // if (req?.query?.categroyName) {
+    //   findCategroy = await getCategoryByKey("nameEn", req?.query?.categroyName);
+    // }
+    let newQuery = req?.query;
+
+    // if (findCategroy) {
+    //   newQuery.categoryId = findCategroy.id;
+    // }
+
+    const result = await getProducts(newQuery, res.locals.language);
 
     let ids = result.docs.map((doc) => doc._id);
     const wishlists = await getMultipleWishlistByKey("productId", ids);
+    const reviews = await getMultipleReviewsByKey("productId", ids);
+    const discounts = await getDiscountByParams({ isValid: true }, true);
+    let allCategoriesDiscount = null;
+    if (discounts?.length) {
+      allCategoriesDiscount = discounts.find((disc) => disc.allCategories);
+    }
 
     let data = result?.docs.map((product) => {
-      let category = {
-        ...product.categoryId,
-        image: product.categoryId?.image
-          ? getImagePath(req, product.categoryId?.image)
-          : null,
-      };
+      let productDiscount = null;
+      if (product.categoryId && discounts?.length) {
+        productDiscount = discounts.find((disc) =>
+          disc.categoryIds
+            ?.map((c) => c.toString())
+            ?.includes(product.categoryId._id.toString())
+        );
+      }
+
+      let filterRating = reviews?.length
+        ? reviews.filter(
+            (rev) => rev.productId.toString() === product._id.toString()
+          )
+        : [];
+
+      let ratingCount = filterRating?.length;
+      const ratingSum = filterRating?.length
+        ? filterRating.map((r) => r.rating).reduce((b, a) => b + a, 0)
+        : 0;
+      let totalRating = Math.ceil(ratingSum / +filterRating?.length);
+
+      if (productDiscount?.discount || allCategoriesDiscount?.discount) {
+        product.oldPrice = product.price;
+        let disc = productDiscount?.discount || allCategoriesDiscount?.discount;
+        disc = parseFloat(disc);
+        product.price =
+          Math.floor(parseFloat(product.price) * (1 - disc / 100)) + "$";
+      }
+
+      let category = product.categoryId
+        ? {
+            ...product.categoryId,
+            image: product.categoryId?.image
+              ? getImagePath(req, product.categoryId?.image)
+              : null,
+          }
+        : null;
       let images = product?.images?.length
         ? product?.images.map((img) => {
             return {
@@ -62,6 +110,13 @@ const getAllProducts = async (req, res) => {
         specifications: product.specifications,
         quantity: product.quantity,
         like: req?.id ? like : undefined,
+        discount:
+          productDiscount?.discount ||
+          allCategoriesDiscount?.discount ||
+          undefined,
+
+        ratingCount,
+        totalRating,
       };
     });
     const pagination = {
@@ -151,6 +206,8 @@ const addProduct = async (req, res) => {
 
 const getProductById = async (req, res) => {
   const { id } = req?.params;
+  let allCategoriesDiscount = null;
+  let productDiscount = null;
 
   if (!id)
     return res
@@ -168,11 +225,36 @@ const getProductById = async (req, res) => {
     : null;
 
   const wishlist = await getWishlistByKey("productId", id, true);
+  const discounts = await getDiscountByParams({ isValid: true }, true);
+  const reviews = await getMultipleReviewsByKey("productId", null, id);
+
   let findLike = wishlist
     ? wishlist.productId.toString() === id
       ? true
       : false
     : false;
+  if (discounts?.length) {
+    allCategoriesDiscount = discounts.find((disc) => disc.allCategories);
+    if (result.categoryId) {
+      productDiscount = discounts.find((disc) =>
+        disc.categoryIds
+          ?.map((c) => c.toString())
+          ?.includes(result.categoryId.toString())
+      );
+    }
+  }
+  result.discount =
+    productDiscount?.discount || allCategoriesDiscount?.discount || null;
+
+  let filterRating = reviews?.length
+    ? reviews.filter((rev) => rev.productId.toString() === id)
+    : [];
+
+  result.ratingCount = filterRating?.length;
+  const ratingSum = filterRating?.length
+    ? filterRating.map((r) => r.rating).reduce((b, a) => b + a, 0)
+    : 0;
+  result.totalRating = Math.ceil(ratingSum / +filterRating?.length);
 
   const finalResult = { ...result, like: findLike ? true : false };
   res.status(200).json(responseMessage("", finalResult, 1));

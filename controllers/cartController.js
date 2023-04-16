@@ -4,7 +4,9 @@ const {
   createCart,
   deleteCart,
 } = require("../services/CartServices");
+const { getDiscountByParams } = require("../services/DiscountServices");
 const { getProductByKey } = require("../services/ProductServices");
+const { getMultipleReviewsByKey } = require("../services/ReviewServices");
 const { getMultipleWishlistByKey } = require("../services/WishlistServices");
 const { getImagePath } = require("../utils/imageFunctions");
 
@@ -12,11 +14,24 @@ const responseMessage = require("../utils/responseMessage");
 
 const getAllCart = async (req, res) => {
   try {
+    let allCategoriesDiscount = null;
+    let productDiscount = null;
     const result = await getCart(req?.id, res.locals.language);
     let ids = result.docs.map((doc) => doc.productId._id);
     const wishlists = await getMultipleWishlistByKey("productId", ids);
-
+    const reviews = await getMultipleReviewsByKey("productId", ids);
+    const discounts = await getDiscountByParams({ isValid: true }, true);
+    if (discounts?.length) {
+      allCategoriesDiscount = discounts.find((disc) => disc.allCategories);
+    }
     let data = result?.docs.map((cart) => {
+      if (cart.productId && discounts?.length) {
+        productDiscount = discounts.find((disc) =>
+          disc.categoryIds
+            ?.map((c) => c.toString())
+            ?.includes(cart?.productId?.categoryId?._id.toString())
+        );
+      }
       let like = wishlists?.length
         ? wishlists.find(
             (wh) => wh.productId.toString() === cart.productId._id.toString()
@@ -24,6 +39,19 @@ const getAllCart = async (req, res) => {
           ? true
           : false
         : false;
+
+      let filterRating = reviews?.length
+        ? reviews.filter(
+            (rev) => rev.productId.toString() === cart.productId._id.toString()
+          )
+        : [];
+
+      let ratingCount = filterRating?.length;
+      const ratingSum = filterRating?.length
+        ? filterRating.map((r) => r.rating).reduce((b, a) => b + a, 0)
+        : 0;
+      let totalRating = Math.ceil(ratingSum / +filterRating?.length);
+
       let product = {
         ...cart.productId,
         images: cart.productId?.images?.length
@@ -35,7 +63,18 @@ const getAllCart = async (req, res) => {
             })
           : null,
         like,
+        discount:
+          productDiscount?.discount || allCategoriesDiscount?.discount || null,
+        ratingCount,
+        totalRating,
       };
+      if (productDiscount?.discount || allCategoriesDiscount?.discount) {
+        product.oldPrice = product.price;
+        let disc = productDiscount?.discount || allCategoriesDiscount?.discount;
+        disc = parseFloat(disc);
+        product.price =
+          Math.floor(parseFloat(product.price) * (1 - disc / 100)) + "$";
+      }
 
       return {
         id: cart.id,
