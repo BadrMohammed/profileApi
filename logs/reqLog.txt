@@ -1970,3 +1970,8 @@
 2023-04-17 21:50:40	285c72d2-de90-46f3-af62-a2192d8f5ee6	GET	/api/v1/discount/megaDeals
 2023-04-17 22:06:39	45e18156-716d-4a7e-a002-c4e09aa2998b	GET	/api/v1/discount/megaDeals
 2023-04-17 22:06:44	cd1815cb-d854-43f3-976e-d0803143d8f2	POST	/api/v1/auth/login
+2023-04-18 00:18:35	6e546058-0438-4b14-aea0-b537abee4d10	POST	//category/create
+2023-04-18 00:21:00	f94f5131-a299-433c-a3c7-6849c53a4f48	POST	/api/v1/category/create
+2023-04-18 00:21:34	9f099b50-94ae-4eb6-86bc-40cbc063409a	POST	/api/v1/category/create
+2023-04-18 00:22:04	ea337321-7119-45f6-9bc4-2f032664ee79	POST	/api/v1/category/create
+2023-04-18 00:22:45	4a1ccb53-6c00-4da8-91a6-162b00bdb50c	POST	/api/v1/category/create

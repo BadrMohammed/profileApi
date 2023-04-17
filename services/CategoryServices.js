@@ -99,7 +99,7 @@ const createCategory = async (formBody, userId, img) => {
     descriptionAr: formBody.descriptionAr,
     parent: formBody.parent,
     userId: userId,
-    isHome: isHome,
+    isHome: formBody.isHome,
   }).then(prepareCategory);
   return entry;
 };
