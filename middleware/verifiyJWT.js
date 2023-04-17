@@ -9,7 +9,14 @@ const verifiyJWT = (req, res, next) => {
     (req.url.startsWith("/api/v1/product/get") ||
       req.url.startsWith("/api/v1/discount/megaDeals") ||
       req.url.startsWith("/api/v1/category/get") ||
-      req.url.startsWith("/api/v1/country/get"))
+      req.url.startsWith("/api/v1/country/get") ||
+      req.url.startsWith("/api/v1/city/get") ||
+      req.url.startsWith("/api/v1/area/get") ||
+      req.url.startsWith("/api/v1/discount/megaDeals") ||
+      req.url.startsWith("/api/v1/auth/register") ||
+      req.url.startsWith("/api/v1/auth/verifiyUser") ||
+      req.url.startsWith("/api/v1/auth/login") ||
+      req.url.startsWith("/api/v1/auth/resetPassword"))
   )
     next();
   else {

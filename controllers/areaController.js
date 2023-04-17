@@ -2,10 +2,38 @@ const {
   getAreaByKey,
   createArea,
   updateArea,
-} = require("../../services/AreaServices");
-const { getCityByKey } = require("../../services/CityServices");
-const { getUserByKey } = require("../../services/UserServices");
-const responseMessage = require("../../utils/responseMessage");
+  getAreas,
+} = require("../services/AreaServices");
+const { getCityByKey } = require("../services/CityServices");
+const { getUserByKey } = require("../services/UserServices");
+const responseMessage = require("../utils/responseMessage");
+
+const getAllAreas = async (req, res) => {
+  try {
+    const result = await getAreas(req?.query, res.locals.language);
+
+    let data = result?.docs.map((area) => {
+      return {
+        name: res.locals.language === "ar" ? area.nameAr : area.nameEn,
+        createdAt: area.createdAt,
+        updatedAt: area.updatedAt,
+        id: area.id,
+        user: area.userId,
+        city: area.cityId,
+      };
+    });
+    const pagination = {
+      counts: result?.counts,
+      currentPage: result?.currentPage,
+      perPage: result?.perPage,
+      totalPages: result?.totalPages,
+    };
+
+    return res.status(200).json(responseMessage("", data, 1, pagination));
+  } catch (error) {
+    return res.status(500).json(responseMessage(error.message, null, 0));
+  }
+};
 
 const addArea = async (req, res) => {
   const { nameEn, nameAr, cityId } = req.body;
@@ -104,4 +132,4 @@ const editArea = async (req, res) => {
   }
 };
 
-module.exports = { getAreaById, addArea, editArea };
+module.exports = { getAreaById, addArea, editArea, getAllAreas };
