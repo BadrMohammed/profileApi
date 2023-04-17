@@ -1975,3 +1975,17 @@
 2023-04-18 00:21:34	9f099b50-94ae-4eb6-86bc-40cbc063409a	POST	/api/v1/category/create
 2023-04-18 00:22:04	ea337321-7119-45f6-9bc4-2f032664ee79	POST	/api/v1/category/create
 2023-04-18 00:22:45	4a1ccb53-6c00-4da8-91a6-162b00bdb50c	POST	/api/v1/category/create
+2023-04-18 00:34:51	18560382-bd50-40c9-a0fd-ab01a7fb65da	GET	/
+2023-04-18 00:35:20	5d5083f3-0cf5-41cc-b9a1-40329ba36ae1	POST	/api/v1/category/create
+2023-04-18 00:35:25	622902d6-546b-423d-8175-1909a39ad795	POST	/api/v1/category/create
+2023-04-18 00:35:27	7fc2ed32-58e3-45ca-ae01-89d174600f13	POST	/api/v1/category/create
+2023-04-18 00:35:34	bf275789-d78f-4730-90fb-b11366464ef6	GET	/api/v1/category/get
+2023-04-18 00:36:53	551378f5-7c38-4b2f-bb22-4944ffe89926	POST	/api/v1/category/create
+2023-04-18 00:36:55	876eafb6-4e0a-49d5-93e3-c9ce3d790c50	POST	/api/v1/category/create
+2023-04-18 00:42:23	938e318d-f742-41a4-8d2f-bb2d1c5fcebf	GET	/
+2023-04-18 00:42:23	31d1e17b-40bb-4e38-8543-8638bfbca636	GET	/favicon.ico
+2023-04-18 00:42:35	9e459908-ef16-4f50-bc77-19947f87a3d6	POST	/auth/login
+2023-04-18 00:43:05	6fc5cdb9-bc66-4570-abe2-0fc21f9786a7	POST	/api/v1/auth/login
+2023-04-18 00:43:56	6738b1af-6a87-4e80-9d50-234ff619cfc6	POST	/api/v1/auth/login
+2023-04-18 00:51:35	43b6a50e-f408-4488-8540-d5b7c8b42b36	POST	/api/v1/category/create
+2023-04-18 00:51:59	6cbaf900-f383-46fe-859d-e5c25ba2082b	POST	/api/v1/category/create

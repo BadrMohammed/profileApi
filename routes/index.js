@@ -24,7 +24,6 @@ function combineRoutes(app) {
 
   //to authorized all routes (with token)
   app.use(verifiyJWT);
-  app.use("/api/v1/auth", authenticationRoutes);
   app.use("/api/v1/user", userRoutes);
   app.use("/api/v1/country", countryRoutes);
   app.use("/api/v1/city", cityRoutes);
@@ -35,6 +34,7 @@ function combineRoutes(app) {
   app.use("/api/v1/review", reviewRoutes);
   app.use("/api/v1/wishlist", wishlistRoutes);
   app.use("/api/v1/discount", discountRoutes);
+  app.use("/api/v1/auth", authenticationRoutes);
 }
 
 module.exports = combineRoutes;

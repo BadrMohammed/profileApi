@@ -3,8 +3,7 @@ const { getUserByKey } = require("../services/UserServices");
 const responseMessage = require("../utils/responseMessage");
 
 const verifiyJWT = (req, res, next) => {
-  const authHeader = req.headers.authorization || req.headers.Authorization;
-
+  const authHeader = req.headers?.authorization || req.headers?.Authorization;
   if (
     !authHeader &&
     (req.url.startsWith("/api/v1/product/get") ||
@@ -31,7 +30,8 @@ const verifiyJWT = (req, res, next) => {
       if (err) return res.sendStatus(403); //invalid token
 
       let findUser = await getUserByKey("_id", decoded.id);
-      if (!findUser.token)
+
+      if (!findUser)
         return res
           .status(400)
           .json(responseMessage(req.t("unauthenticated"), null, 0));
