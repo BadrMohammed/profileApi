@@ -1989,3 +1989,17 @@
 2023-04-18 00:43:56	6738b1af-6a87-4e80-9d50-234ff619cfc6	POST	/api/v1/auth/login
 2023-04-18 00:51:35	43b6a50e-f408-4488-8540-d5b7c8b42b36	POST	/api/v1/category/create
 2023-04-18 00:51:59	6cbaf900-f383-46fe-859d-e5c25ba2082b	POST	/api/v1/category/create
+2023-04-18 01:41:26	694b2f85-8ecd-4aff-a29e-77d944c2820b	GET	/
+2023-04-18 01:41:27	5f9463bc-86eb-4b69-8b92-9e680f74f6eb	GET	/favicon.ico
+2023-04-18 01:42:19	a30b3c51-b1b6-409a-a357-ac4f29d0759b	GET	/api/v1/category/get/64205f287c39b3e5f0ae70f6
+2023-04-18 01:42:55	66bc1e41-abc1-47a4-830a-6c44b8789faf	GET	/api/v1/category/get/64205f287c39b3e5f0ae70f6
+2023-04-18 01:44:37	6399d511-70aa-499f-b79e-3844c953ec1a	GET	/api/v1/category/get/64205f287c39b3e5f0ae70f6
+2023-04-18 01:45:37	716c0b64-36db-44ee-bfbd-9c5724a3efb2	GET	/api/v1/product/get/642366d36872fb1dccc897bd
+2023-04-18 01:45:54	9032eb20-9b78-424a-b9ee-b1ec699067fe	GET	/api/v1/product/get/642366d36872fb1dccc897bd
+2023-04-18 01:46:46	85710add-ccfd-41c0-b825-96330d357f69	GET	/api/v1/country/get
+2023-04-18 01:47:08	998e5ab2-56a9-4b0d-833c-5df7c3358b70	GET	/api/v1/country/get
+2023-04-18 01:47:12	bcd5f947-2428-4eef-bc1a-c8fe766dcbf6	GET	/api/v1/country/get
+2023-04-18 01:47:16	57194694-62da-45c2-9544-2a43b1655f7a	GET	/api/v1/country/get/643d61bbbeb2d9b5bef7dab5
+2023-04-18 01:47:50	b08607c8-ee6d-4e85-aadd-ad94eb91c0fe	GET	/api/v1/country/get
+2023-04-18 01:48:06	a8cc3195-dd88-457c-91df-8b5c09c22224	GET	/api/v1/city/get?countryId=63efe24ce6bb9cca5d0aca12
+2023-04-18 01:53:42	d6ccd29f-a43e-4dfb-bd99-bad8e8d90949	GET	/api/v1/city/get?countryId=63efe24ce6bb9cca5d0aca12

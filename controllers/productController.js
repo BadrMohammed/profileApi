@@ -214,50 +214,58 @@ const getProductById = async (req, res) => {
       .status(400)
       .json(responseMessage(req.t("item-id-required"), null, 0));
 
-  const result = await getProductByKey("_id", id, true);
-  result.images = result?.images?.length
-    ? result.images.map((img) => {
-        return {
-          url: getImagePath(req, img?.url),
-          id: img.id,
-        };
-      })
-    : null;
+  try {
+    const result = await getProductByKey("_id", id, true);
+    if (!result)
+      return res
+        .status(400)
+        .json(responseMessage(req.t("item-not-exist"), null, 0));
+    result.images = result?.images?.length
+      ? result.images.map((img) => {
+          return {
+            url: getImagePath(req, img?.url),
+            id: img.id,
+          };
+        })
+      : null;
 
-  const wishlist = await getWishlistByKey("productId", id, true);
-  const discounts = await getDiscountByParams({ isValid: true }, true);
-  const reviews = await getMultipleReviewsByKey("productId", null, id);
+    const wishlist = await getWishlistByKey("productId", id, true);
+    const discounts = await getDiscountByParams({ isValid: true }, true);
+    const reviews = await getMultipleReviewsByKey("productId", null, id);
 
-  let findLike = wishlist
-    ? wishlist.productId.toString() === id
-      ? true
-      : false
-    : false;
-  if (discounts?.length) {
-    allCategoriesDiscount = discounts.find((disc) => disc.allCategories);
-    if (result.categoryId) {
-      productDiscount = discounts.find((disc) =>
-        disc.categoryIds
-          ?.map((c) => c.toString())
-          ?.includes(result.categoryId.toString())
-      );
+    let findLike = wishlist
+      ? wishlist.productId.toString() === id
+        ? true
+        : false
+      : false;
+    if (discounts?.length) {
+      allCategoriesDiscount = discounts.find((disc) => disc.allCategories);
+      if (result.categoryId) {
+        productDiscount = discounts.find((disc) =>
+          disc.categoryIds
+            ?.map((c) => c.toString())
+            ?.includes(result.categoryId.toString())
+        );
+      }
     }
+    result.discount =
+      productDiscount?.discount || allCategoriesDiscount?.discount || null;
+
+    let filterRating = reviews?.length
+      ? reviews.filter((rev) => rev.productId.toString() === id)
+      : [];
+
+    result.ratingCount = filterRating?.length;
+    const ratingSum = filterRating?.length
+      ? filterRating.map((r) => r.rating).reduce((b, a) => b + a, 0)
+      : 0;
+    result.totalRating = Math.ceil(ratingSum / +filterRating?.length);
+
+    const finalResult = { ...result, like: findLike ? true : false };
+    res.status(200).json(responseMessage("", finalResult, 1));
+  } catch (error) {
+    return res.status(500).json(responseMessage(error.message, null, 0));
   }
-  result.discount =
-    productDiscount?.discount || allCategoriesDiscount?.discount || null;
-
-  let filterRating = reviews?.length
-    ? reviews.filter((rev) => rev.productId.toString() === id)
-    : [];
-
-  result.ratingCount = filterRating?.length;
-  const ratingSum = filterRating?.length
-    ? filterRating.map((r) => r.rating).reduce((b, a) => b + a, 0)
-    : 0;
-  result.totalRating = Math.ceil(ratingSum / +filterRating?.length);
-
-  const finalResult = { ...result, like: findLike ? true : false };
-  res.status(200).json(responseMessage("", finalResult, 1));
 };
 
 const editProduct = async (req, res) => {

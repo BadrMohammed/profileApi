@@ -86,8 +86,16 @@ const getCountryById = async (req, res) => {
       .status(400)
       .json(responseMessage(req.t("item-id-required"), null, 0));
 
-  const result = await getCountryByKey("_id", id);
-  res.status(200).json(responseMessage("", result, 1));
+  try {
+    const result = await getCountryByKey("_id", id);
+    if (!result)
+      return res
+        .status(400)
+        .json(responseMessage(req.t("item-not-exist"), null, 0));
+    res.status(200).json(responseMessage("", result, 1));
+  } catch (error) {
+    return res.status(500).json(responseMessage(error.message, null, 0));
+  }
 };
 
 const editCountry = async (req, res) => {

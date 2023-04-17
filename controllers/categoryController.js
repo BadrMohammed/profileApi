@@ -107,10 +107,18 @@ const getCategoryById = async (req, res) => {
       .status(400)
       .json(responseMessage(req.t("item-id-required"), null, 0));
 
-  const result = await getCategoryByKey("_id", id);
-  result.image = getImagePath(req, result?.image);
+  try {
+    const result = await getCategoryByKey("_id", id);
+    if (!result)
+      return res
+        .status(400)
+        .json(responseMessage(req.t("item-not-exist"), null, 0));
+    result.image = getImagePath(req, result?.image);
 
-  res.status(200).json(responseMessage("", result, 1));
+    res.status(200).json(responseMessage("", result, 1));
+  } catch (error) {
+    return res.status(500).json(responseMessage(error.message, null, 0));
+  }
 };
 
 const editCategory = async (req, res) => {
