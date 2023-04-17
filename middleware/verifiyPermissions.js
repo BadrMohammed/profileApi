@@ -7,7 +7,6 @@ const verifiyPermissions = (...allowedPermissions) => {
         .json(responseMessage(req.t("no-permission"), null, 0));
 
     const PermissionsArray = [...allowedPermissions];
-
     const result = req.permissions
       .map((per) => PermissionsArray.includes(per))
       .find((val) => val === true);

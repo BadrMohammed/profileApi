@@ -46,7 +46,7 @@ const addCity = async (req, res) => {
     const result = {
       nameEn: city.nameEn,
       nameAr: city.nameAr,
-      id: city?._id,
+      id: city?.id,
       createdAt: city?.createdAt,
       updatedAt: city?.updatedAt,
       country: {

@@ -62,7 +62,7 @@ const addCountry = async (req, res) => {
       nameEn: country.nameEn,
       nameAr: country.nameAr,
       userId: country.userId,
-      id: country?._id,
+      id: country?.id,
       createdAt: country?.createdAt,
       updatedAt: country?.updatedAt,
       user: {

@@ -46,10 +46,10 @@ const addArea = async (req, res) => {
     const result = {
       nameEn: area.nameEn,
       nameAr: area.nameAr,
-      id: area?._id,
+      id: area?.id,
       createdAt: area?.createdAt,
       updatedAt: area?.updatedAt,
-      country: {
+      city: {
         id: findCity._id,
         name: res.locals.language === "ar" ? findCity.nameAr : findCity.nameEn,
       },
