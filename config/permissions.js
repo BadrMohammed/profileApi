@@ -2,7 +2,7 @@
 const PERMISSIONS = {
   "all-permissions": "all-permissions",
   "get-users": "get-users",
-  "get-user": "get-user",
+  // "get-user": "get-user",
   "create-user": "create-user",
   "update-user": "update-user",
   "create-country": "create-country",
@@ -18,7 +18,7 @@ const PERMISSIONS = {
   "get-area": "get-area",
   "update-area": "update-area",
   // "get-categories": "get-categories",
-  "get-category": "get-category",
+  // "get-category": "get-category",
   "create-category": "create-category",
   "update-category": "update-category",
   "get-products": "get-products",

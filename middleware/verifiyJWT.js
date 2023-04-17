@@ -7,7 +7,9 @@ const verifiyJWT = (req, res, next) => {
   if (
     !authHeader &&
     (req.url.startsWith("/api/v1/product/get") ||
-      req.url.startsWith("/api/v1/discount/megaDeals"))
+      req.url.startsWith("/api/v1/discount/megaDeals") ||
+      req.url.startsWith("/api/v1/category/get") ||
+      req.url.startsWith("/api/v1/country/get"))
   )
     next();
   else {

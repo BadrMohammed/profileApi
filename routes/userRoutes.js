@@ -12,11 +12,7 @@ router.get(
   userController.getAllUsers
 );
 
-router.get(
-  "/profile",
-  verifiyPermissions(permissions["get-user"]),
-  userController.getUserById
-);
+router.get("/profile", userController.getUserById);
 
 router.post(
   "/create",
@@ -24,10 +20,12 @@ router.post(
   userController.addUser
 );
 
-router.put(
-  "/update",
-  verifiyPermissions(permissions["update-user"]),
-  userController.editUser
-);
+// router.put(
+//   "/update",
+//   verifiyPermissions(permissions["update-user"]),
+//   userController.editUser
+// );
+
+router.put("/profile/update", userController.editUser);
 
 module.exports = router;
