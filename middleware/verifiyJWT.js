@@ -16,7 +16,8 @@ const verifiyJWT = (req, res, next) => {
       req.url.startsWith("/api/v1/auth/register") ||
       req.url.startsWith("/api/v1/auth/verifiyUser") ||
       req.url.startsWith("/api/v1/auth/login") ||
-      req.url.startsWith("/api/v1/auth/resetPassword"))
+      req.url.startsWith("/api/v1/auth/resetPassword") ||
+      req.url.startsWith("/uploads"))
   )
     next();
   else {
