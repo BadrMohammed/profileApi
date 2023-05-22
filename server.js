@@ -17,9 +17,6 @@ const path = require("path");
 const PORT = process.env.PORT || 3500;
 const staticPath = path.join(__dirname, "/public/uploads");
 
-// const swaggerUi = require("swagger-ui-express");
-// const swaggerDocument = require("./swagger.json");
-
 //connect to MONOG DD
 connectDB();
 
@@ -30,8 +27,6 @@ initLocal();
 app.use(logger); //to log all erros
 app.use(credentials);
 app.use(cors(corsOptions)); //to disable secuirty policy
-
-// app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // build in middleware
 app.use(express.urlencoded({ extended: false })); //handle url encoded(form data)

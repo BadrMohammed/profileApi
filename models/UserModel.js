@@ -4,21 +4,7 @@ const isEmail = require("validator").isEmail;
 const mongoosePaginate = require("mongoose-paginate-v2");
 const userSchema = new Schema(
   {
-    firstName: String,
-    lastName: String,
-    addresses: [
-      {
-        _id: false,
-        country: { type: Schema.Types.ObjectId, ref: "countries" },
-        city: { type: Schema.Types.ObjectId, ref: "cities" },
-        area: { type: Schema.Types.ObjectId, ref: "areas" },
-        street: String,
-        building: Number,
-        floor: Number,
-        apartment: Number,
-        isDefault: { type: Boolean, default: false },
-      },
-    ],
+    fullName: String,
     email: {
       type: String,
       required: true,
@@ -31,17 +17,11 @@ const userSchema = new Schema(
       min: [8, "Password must be between 8 and 14 chractor"],
       max: [14, "Password must be between 8 and 14 chractor"],
     },
-    mobile: String,
-    birthDate: Date,
-    token: String,
-    userType: {
-      type: Number,
-      enum: [0, 1],
-      default: 1,
+    phoneNumber: String,
+    jopType: {
+      type: String,
+      enum: ["IT", "Marketing", "Business Development"],
     },
-    permissions: { type: Array, default: undefined },
-    isVerified: { type: Boolean, default: false },
-    otp: { type: String, default: "" },
   },
   {
     timestamps: true,
