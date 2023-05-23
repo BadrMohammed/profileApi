@@ -18,7 +18,7 @@ const userSchema = new Schema(
       max: [14, "Password must be between 8 and 14 chractor"],
     },
     phoneNumber: String,
-    jopType: {
+    jobType: {
       type: String,
       enum: ["IT", "Marketing", "Business Development"],
     },

@@ -7,7 +7,7 @@ const getUsers = async (params, locale) => {
     page = 1,
     email,
     id,
-    jopType,
+    jobType,
     fullName,
     createdAt,
     phoneNumber,
@@ -23,7 +23,7 @@ const getUsers = async (params, locale) => {
   };
   let query = {
     email: email && { $regex: new RegExp(email, "i") },
-    jopType: jopType && jopType,
+    jobType: jobType && jobType,
     _id: id && id,
     createdAt: createdAt && createdAt,
     fullName: fullName && { $regex: new RegExp(fullName, "i") },
@@ -46,7 +46,7 @@ const createUser = async (formBody, hashedPassword) => {
     email: formBody.email,
     password: hashedPassword,
     phoneNumber: formBody.phoneNumber,
-    jopType: formBody.jopType,
+    jobType: formBody.jobType,
   });
   return entry;
 };
@@ -57,7 +57,7 @@ const updateUser = async (user, formBody) => {
   if (formBody.email) entry.email = formBody.email;
   if (formBody.password) entry.password = formBody.password;
   if (formBody.phoneNumber) entry.phoneNumber = formBody.phoneNumber;
-  if (formBody.jopType) entry.jopType = formBody.jopType;
+  if (formBody.jobType) entry.jobType = formBody.jobType;
 
   const result = await entry.save();
 
