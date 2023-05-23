@@ -51,11 +51,11 @@ const createUser = async (formBody, hashedPassword) => {
   return entry;
 };
 
-const updateUser = async (user, formBody) => {
+const updateUser = async (user, formBody, hashedPassword) => {
   const entry = user;
   if (formBody.fullName) entry.fullName = formBody.fullName;
   if (formBody.email) entry.email = formBody.email;
-  if (formBody.password) entry.password = formBody.password;
+  if (hashedPassword) entry.password = hashedPassword;
   if (formBody.phoneNumber) entry.phoneNumber = formBody.phoneNumber;
   if (formBody.jobType) entry.jobType = formBody.jobType;
 

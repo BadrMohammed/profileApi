@@ -55,7 +55,7 @@ const addUser = async (req, res) => {
 };
 
 const editUser = async (req, res) => {
-  const { id } = req?.body;
+  const { id, password } = req?.body;
   if (!id)
     return res
       .status(400)
@@ -67,7 +67,12 @@ const editUser = async (req, res) => {
         .status(400)
         .json(responseMessage(req.t("item-not-exist"), null, 0));
 
-    const result = await updateUser(findUser, req?.body);
+    let hashedPassword = null;
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
+    const result = await updateUser(findUser, req?.body, hashedPassword);
 
     res.status(200).json(responseMessage(req.t("item-updated"), result, 1));
   } catch (error) {
