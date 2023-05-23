@@ -64,4 +64,9 @@ const updateUser = async (user, formBody, hashedPassword) => {
   return result;
 };
 
-module.exports = { getUsers, createUser, updateUser, getUserByKey };
+const deleteUser = async (id) => {
+  const result = await User.deleteOne({ _id: id });
+  return result;
+};
+
+module.exports = { getUsers, createUser, updateUser, getUserByKey, deleteUser };

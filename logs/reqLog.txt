@@ -286,3 +286,7 @@
 2023-05-23 06:06:46	6e6339da-540a-49a6-b171-272c5f9c9cbc	GET	/api/v1/user/get?page=1
 2023-05-23 06:06:46	4e6a2236-e8ef-43a1-8759-7a933bdefe15	OPTIONS	/api/v1/user/get?page=1
 2023-05-23 06:06:46	8a15b7e8-3074-4e3c-9e4b-cb5d15b17eb0	GET	/api/v1/user/get?page=1
+2023-05-23 22:24:08	a5528249-2749-4a7d-9374-c4c4e3506903	GET	/api/v1/user/delete/646bbf742e3a3c93e92cf9ff
+2023-05-23 22:24:11	77c6e02f-6ef2-4ded-802c-371121a8a540	GET	/api/v1/user/delete/646bbf742e3a3c93e92cf9ff
+2023-05-23 22:24:18	a8af036e-4516-4a1a-80d0-e3c58e8f7fbd	DELETE	/api/v1/user/delete/646bbf742e3a3c93e92cf9ff
+2023-05-23 22:24:22	22fff703-a165-4bfe-b90b-971baa1b3ebc	DELETE	/api/v1/user/delete/646bbf742e3a3c93e92cf9ff

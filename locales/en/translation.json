@@ -2,7 +2,8 @@
   "email-password-required": "Email and password are required",
   "password-length-validation": "Password must be more than 8 characters and less than 14 characters.",
   "email-exist": "Email are exist.",
-  "item-updated": "Item has been updated successfully",
-  "item-id-required": "Item id is required",
-  "item-not-exist": "Item does not exist."
+  "item-updated": "User has been updated successfully",
+  "item-id-required": "User id is required",
+  "item-not-exist": "User does not exist.",
+  "item-deleted-successfully": "User has been deleted successfully"
 }

@@ -2,7 +2,8 @@
   "email-password-required": "البريد الإلكتروني وكلمة المرور مطلوبة",
   "password-length-validation": "يجب أن تكون كلمة المرور أكثر من 8 أحرف وأقل من 14 حرفًا.",
   "email-exist": "البريد الإلكتروني موجود",
-  "item-updated": "تم تعديل العنصر بنجاح",
-  "item-id-required": "معرف العنصر مطلوب",
-  "item-not-exist": "هذا العنصر غير موجود"
+  "item-updated": "تم تعديل بيانات المستخدم بنجاح",
+  "item-id-required": "رقم التعريفي المستخدم مطلوب",
+  "item-not-exist": "هذا المستخدم غير موجود",
+  "item-deleted-successfully": "تمت حذف المستخدم بنجاح"
 }

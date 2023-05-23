@@ -4,6 +4,7 @@ const {
   createUser,
   getUsers,
   updateUser,
+  deleteUser,
 } = require("../services/UserServices");
 const responseMessage = require("../utils/responseMessage");
 
@@ -98,5 +99,28 @@ const getUserById = async (req, res) => {
     return res.status(500).json(responseMessage(error.message, null, 0));
   }
 };
+const removeUser = async (req, res) => {
+  const { id } = req?.params;
 
-module.exports = { getAllUsers, getUserById, addUser, editUser };
+  if (!id)
+    return res
+      .status(400)
+      .json(responseMessage(req.t("item-id-required"), null, 0));
+
+  let findItem = await getUserByKey("_id", id);
+  if (!findItem)
+    return res
+      .status(400)
+      .json(responseMessage(req.t("item-not-exist"), null, 0));
+
+  try {
+    const result = await deleteUser(id);
+    res
+      .status(200)
+      .json(responseMessage(req.t("item-deleted-successfully"), null, 1));
+  } catch (error) {
+    return res.status(500).json(responseMessage(error.message, null, 0));
+  }
+};
+
+module.exports = { getAllUsers, getUserById, addUser, editUser, removeUser };
